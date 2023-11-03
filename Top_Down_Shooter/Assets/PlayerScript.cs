@@ -49,7 +49,6 @@ public class PlayerScript : MonoBehaviour
         Vector3 pos = transform.position;
         pos.x += movX;
         pos.y += movY;
-        Debug.Log(pos);
         transform.position = pos;
 
 
@@ -77,14 +76,25 @@ public class PlayerScript : MonoBehaviour
         else if(angle >=105 && angle < 165)  newAnim =  "DiagDownAnim";
         else  newAnim = "DownAnim";
 
-        
+        bool aimOnLeft = false;
+        bool aimBelow = false;
+        if(aim.transform.position.x < transform.position.x) aimOnLeft = true;
+        if(aim.transform.position.y < transform.position.y) aimBelow = true;
+
+        bool playInReverse = false;
+        if(aimOnLeft && dx > 0) playInReverse = true;
+        else if(!aimOnLeft && dx < 0) playInReverse = true;
+        else if(aimBelow && dy > 0) playInReverse = true;
+        else if(!aimBelow && dy < 0) playInReverse = true;
+        Debug.Log(playInReverse);
+        animatorController.SetBool("playInReverse", playInReverse);
 
         if(dx == 0f && dy == 0f){
         if(currentAnimaton != newAnim){
             animatorController.enabled = true;
             animatorController.Play(newAnim);
             currentAnimaton = newAnim;
-            Mirror();
+            Mirror(aimOnLeft);
             
         }
         timer += Time.deltaTime;
@@ -96,22 +106,22 @@ public class PlayerScript : MonoBehaviour
         
         animatorController.enabled = true;
         
-        Mirror();
+        Mirror(aimOnLeft);
         
         if(currentAnimaton == newAnim) return;
         animatorController.Play(newAnim);
         currentAnimaton = newAnim;
     }
 
-    void Mirror(){
-        if(aim.transform.position.x < transform.position.x){
-            Quaternion targetRotation = Quaternion.Euler(0, 180, 0);
-            transform.rotation = targetRotation;
+    void Mirror(bool aimOnLeft){
+        Quaternion targetRotation;
+        if(aimOnLeft){
+            targetRotation = Quaternion.Euler(0, 180, 0);
         }
         else{
-            Quaternion targetRotation = Quaternion.Euler(0, 0, 0);
-            transform.rotation = targetRotation;
+            targetRotation = Quaternion.Euler(0, 0, 0);
         }
+        transform.rotation = targetRotation;
         
     }
 }
