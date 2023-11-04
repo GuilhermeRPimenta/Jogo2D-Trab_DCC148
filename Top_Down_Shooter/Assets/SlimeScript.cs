@@ -7,21 +7,39 @@ public class SlimeScript : MonoBehaviour
     private GameObject player;
     private Animator animatorController;
     private string currentAnimaton;
+    private float cameraHalfHeight;
+    private float cameraHalfWidth;
     private float speed = 1f;
+
+    private int health = 5;
 
     // Start is called before the first frame update
     void Start()
     {
         animatorController = GetComponent<Animator>();
         player = GameObject.Find("Player");
+
+        cameraHalfHeight = Camera.main.orthographicSize;
+        cameraHalfWidth = cameraHalfHeight * Camera.main.aspect;
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+        Move();
+
+        
+        
+    }
+
+    void Move(){
         float dx;
         float dy;
         Vector3 pos = transform.position;
+        if(pos.x > Camera.main.transform.position.x + cameraHalfWidth + 2f  || pos.x < Camera.main.transform.position.x - cameraHalfWidth - 2f) return;
+        if(pos.y > Camera.main.transform.position.y + cameraHalfHeight + 2f  || pos.y < Camera.main.transform.position.y - cameraHalfHeight - 2f) return;
+
         if(pos.x < player.transform.position.x) dx = 1f;
         else dx = -1f;
         if(pos.y < player.transform.position.y) dy = 1f;
@@ -47,12 +65,7 @@ public class SlimeScript : MonoBehaviour
         transform.position = pos;
 
         UpdateAnimation(newAnim);
-
-
-        
-        
     }
-
     void UpdateAnimation(string newAnim){
 
         Mirror();
@@ -67,5 +80,15 @@ public class SlimeScript : MonoBehaviour
         transform.rotation = targetRotation;
     }
 
+    void OnTriggerEnter2D(Collider2D target){
+        if(target.gameObject.tag == "PlayerBullet"){
+            Destroy(target.gameObject);
+            health -= 1;
+            if(health <=0){
+                Destroy(gameObject);
+            }
+        }
+        
+    }
     
 }

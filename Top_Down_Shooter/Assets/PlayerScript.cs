@@ -10,6 +10,8 @@ public class PlayerScript : MonoBehaviour
     private GameObject aim;
     [SerializeField] private float speed = 5f;
     public string newAnim;
+    private int health = 5;
+    private float invincibility = 0f;
 
     
     private WeaponScript[] weaponScript;
@@ -30,6 +32,8 @@ public class PlayerScript : MonoBehaviour
         Move();
 
         if(Input.GetMouseButtonDown(0)) weaponScript[0].CheckWeapon();
+
+        
     }
 
     void Move(){
@@ -116,5 +120,16 @@ public class PlayerScript : MonoBehaviour
         }
         transform.rotation = targetRotation;
         
+    }
+
+    void OnCollisionStay2D(Collision2D target){
+        if(target.gameObject.tag == "CanHitPlayer"){
+            if(invincibility > 0) invincibility -= Time.deltaTime;
+            if(invincibility <= 0){
+                health -= 1;
+                Debug.Log(health);
+                invincibility = 0.5f;
+            }
+        }
     }
 }
