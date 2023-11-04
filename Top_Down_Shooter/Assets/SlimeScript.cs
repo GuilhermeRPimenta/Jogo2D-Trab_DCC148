@@ -37,8 +37,8 @@ public class SlimeScript : MonoBehaviour
         float dx;
         float dy;
         Vector3 pos = transform.position;
-        if(pos.x > Camera.main.transform.position.x + cameraHalfWidth + 2f  || pos.x < Camera.main.transform.position.x - cameraHalfWidth - 2f) return;
-        if(pos.y > Camera.main.transform.position.y + cameraHalfHeight + 2f  || pos.y < Camera.main.transform.position.y - cameraHalfHeight - 2f) return;
+        if(pos.x > Camera.main.transform.position.x + cameraHalfWidth + 5.5f  || pos.x < Camera.main.transform.position.x - cameraHalfWidth - 5.5f) return;
+        if(pos.y > Camera.main.transform.position.y + cameraHalfHeight + 5.5f  || pos.y < Camera.main.transform.position.y - cameraHalfHeight - 5.5f) return;
 
         if(pos.x < player.transform.position.x) dx = 1f;
         else dx = -1f;

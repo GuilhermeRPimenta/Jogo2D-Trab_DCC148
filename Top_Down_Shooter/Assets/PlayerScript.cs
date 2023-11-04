@@ -13,7 +13,7 @@ public class PlayerScript : MonoBehaviour
     public string newAnim;
     private int health = 5;
     [SerializeField] private Slider healthSlider;
-    private float invincibility = 0f;
+
 
     
     private WeaponScript[] weaponScript;
@@ -57,7 +57,7 @@ public class PlayerScript : MonoBehaviour
 
         
 
-
+        
         
         UpdateAnimation(dx, dy);
     }
@@ -124,14 +124,16 @@ public class PlayerScript : MonoBehaviour
         
     }
 
-    void OnCollisionStay2D(Collision2D target){
+    void OnCollisionEnter2D(Collision2D target){
         if(target.gameObject.tag == "CanHitPlayer"){
-            if(invincibility > 0) invincibility -= Time.deltaTime;
-            if(invincibility <= 0){
-                health -= 1;
-                healthSlider.value = health;
-                invincibility = 0.5f;
-            }
+            Destroy(target.gameObject);
+            health -= 1;
+            healthSlider.value = health;
+        }
+        else if(target.gameObject.tag == "EnemyBullet"){
+            target.gameObject.SetActive(false);
+            health -= 1;
+            healthSlider.value = health;
         }
     }
 }

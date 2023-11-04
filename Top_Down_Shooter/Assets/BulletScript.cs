@@ -20,8 +20,8 @@ public class BulletScript : MonoBehaviour
         Vector3 v = Vector3.up * Time.deltaTime * speed;
         transform.Translate(v);
         Vector3 pos = transform.position;
-        if(pos.x > Camera.main.transform.position.x + cameraHalfWidth + 0.5f  || pos.x < Camera.main.transform.position.x - cameraHalfWidth - 0.5f
-        || pos.y > Camera.main.transform.position.y + cameraHalfHeight + 0.5f  || pos.y < Camera.main.transform.position.y - cameraHalfHeight - 0.5f){
+        if(pos.x > Camera.main.transform.position.x + cameraHalfWidth + 5.5f  || pos.x < Camera.main.transform.position.x - cameraHalfWidth - 5.5f
+        || pos.y > Camera.main.transform.position.y + cameraHalfHeight + 5.5f  || pos.y < Camera.main.transform.position.y - cameraHalfHeight - 5.5f){
             gameObject.SetActive(false);
         }
     }
