@@ -4,35 +4,32 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    //public Hashtable animationDict = new Hashtable();
     private string currentAnimaton;
     private Animator animatorController;
     private float timer = 0f;
     private GameObject aim;
     [SerializeField] private float speed = 5f;
+    public string newAnim;
+
+    
+    private WeaponScript[] weaponScript;
+    public bool aimOnLeft;
+    public bool aimBelow;
 
     // Start is called before the first frame update
     void Start()
     {
-        
         animatorController = GetComponent<Animator>();
-        
         aim = GameObject.Find("Aim");
-
-        /*animationDict.Add("01", "UpAnim");
-        animationDict.Add("0-1", "DownAnim");
-        animationDict.Add("10", "SideAnim");
-        animationDict.Add("11", "DiagUpAnim");
-        animationDict.Add("1-1", "DiagDownAnim");
-        animationDict.Add("-10", "SideAnim");
-        animationDict.Add("-11", "DiagUpAnim");
-        animationDict.Add("-1-1", "DiagDownAnim");*/
+        weaponScript = GetComponentsInChildren<WeaponScript>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Move();
+
+        if(Input.GetMouseButtonDown(0)) weaponScript[0].CheckWeapon();
     }
 
     void Move(){
@@ -49,18 +46,12 @@ public class PlayerScript : MonoBehaviour
         Vector3 pos = transform.position;
         pos.x += movX;
         pos.y += movY;
-        Debug.Log(pos);
         transform.position = pos;
 
 
         
 
-        
-        //float angle = Mathf.Atan2(transform.position.x - aim.transform.position.x, transform.position.y - aim.transform.position.y) * Mathf.Rad2Deg;
 
-        //Debug.Log(angle);
-
-        
         
         UpdateAnimation(dx, dy);
     }
@@ -70,21 +61,32 @@ public class PlayerScript : MonoBehaviour
         Vector3 vectorPlayerAim = aim.transform.position - transform.position;
         float angle = Vector2.Angle(Vector3.up, vectorPlayerAim);
 
-        string newAnim;
-        if(angle >= 0 && angle < 15)  newAnim = "UpAnim";
-        else if(angle >=15 && angle < 75)  newAnim = "DiagUpAnim";
-        else if(angle >= 75 && angle < 105)  newAnim = "SideAnim";
-        else if(angle >=105 && angle < 165)  newAnim =  "DiagDownAnim";
+        
+        if(angle >= 0 && angle < 30)  newAnim = "UpAnim";
+        else if(angle >=30 && angle < 60)  newAnim = "DiagUpAnim";
+        else if(angle >= 60 && angle < 120)  newAnim = "SideAnim";
+        else if(angle >=120 && angle < 150)  newAnim =  "DiagDownAnim";
         else  newAnim = "DownAnim";
 
-        
+        aimOnLeft = false;
+        aimBelow = false;
+        if(aim.transform.position.x < transform.position.x) aimOnLeft = true;
+        if(aim.transform.position.y < transform.position.y) aimBelow = true;
+
+        bool playInReverse = false;
+        if(aimOnLeft && dx > 0) playInReverse = true;
+        else if(!aimOnLeft && dx < 0) playInReverse = true;
+        else if(aimBelow && dy > 0) playInReverse = true;
+        else if(!aimBelow && dy < 0) playInReverse = true;
+        animatorController.SetBool("playInReverse", playInReverse);
 
         if(dx == 0f && dy == 0f){
         if(currentAnimaton != newAnim){
             animatorController.enabled = true;
             animatorController.Play(newAnim);
             currentAnimaton = newAnim;
-            Mirror();
+            weaponScript[0].UpdateWeaponPos();
+            Mirror(aimOnLeft);
             
         }
         timer += Time.deltaTime;
@@ -95,23 +97,23 @@ public class PlayerScript : MonoBehaviour
         }
         
         animatorController.enabled = true;
-        
-        Mirror();
+        weaponScript[0].UpdateWeaponPos();
+        Mirror(aimOnLeft);
         
         if(currentAnimaton == newAnim) return;
         animatorController.Play(newAnim);
         currentAnimaton = newAnim;
     }
 
-    void Mirror(){
-        if(aim.transform.position.x < transform.position.x){
-            Quaternion targetRotation = Quaternion.Euler(0, 180, 0);
-            transform.rotation = targetRotation;
+    void Mirror(bool aimOnLeft){
+        Quaternion targetRotation;
+        if(aimOnLeft){
+            targetRotation = Quaternion.Euler(0, 180, 0);
         }
         else{
-            Quaternion targetRotation = Quaternion.Euler(0, 0, 0);
-            transform.rotation = targetRotation;
+            targetRotation = Quaternion.Euler(0, 0, 0);
         }
+        transform.rotation = targetRotation;
         
     }
 }
