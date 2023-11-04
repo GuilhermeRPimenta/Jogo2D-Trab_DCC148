@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private float speed = 5f;
     public string newAnim;
     private int health = 5;
+    [SerializeField] private Slider healthSlider;
     private float invincibility = 0f;
 
     
@@ -127,7 +129,7 @@ public class PlayerScript : MonoBehaviour
             if(invincibility > 0) invincibility -= Time.deltaTime;
             if(invincibility <= 0){
                 health -= 1;
-                Debug.Log(health);
+                healthSlider.value = health;
                 invincibility = 0.5f;
             }
         }
