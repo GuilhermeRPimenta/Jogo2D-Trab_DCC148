@@ -81,12 +81,13 @@ public class PlayerScript : MonoBehaviour
         animatorController.SetBool("playInReverse", playInReverse);
 
         if(dx == 0f && dy == 0f){
+            Mirror(aimOnLeft);
         if(currentAnimaton != newAnim){
             animatorController.enabled = true;
             animatorController.Play(newAnim);
             currentAnimaton = newAnim;
             weaponScript[0].UpdateWeaponPos();
-            Mirror(aimOnLeft);
+            
             
         }
         timer += Time.deltaTime;
