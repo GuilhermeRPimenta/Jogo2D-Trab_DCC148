@@ -28,7 +28,7 @@ public class PistolScript : MonoBehaviour
         weapon = GameObject.Find("Weapon");
         weaponScript = weapon.GetComponent<WeaponScript>();
         aim = GameObject.Find("Aim");
-        pool = new ObjectPool(bulletPrefab, 1000);
+        pool = new ObjectPool(bulletPrefab, 100);
 
     }
 
@@ -60,6 +60,7 @@ public class PistolScript : MonoBehaviour
         string newAnim = weaponScript.newAnim;
         int signalX = 1;
         if(playerScr.aimOnLeft) signalX = -1;
+        
         if(newAnim == "UpAnim") bullet.transform.position = weapon.transform.position + new Vector3(0f, 0.21f, 0f);
         else if(newAnim == "DiagUpAnim") bullet.transform.position = weapon.transform.position + new Vector3(signalX * 0.16f, 0.05f, 0f);
         else if(newAnim == "SideAnim") bullet.transform.position = weapon.transform.position + new Vector3(signalX * 0.16f, 0f, 0f);
