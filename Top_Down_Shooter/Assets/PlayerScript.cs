@@ -9,7 +9,7 @@ public class PlayerScript : MonoBehaviour
     private Animator animatorController;
     private float timer = 0f;
     private GameObject aim;
-    [SerializeField] private float speed = 5f;
+    [SerializeField] private float speed = 9f;
     public string newAnim;
     private int health = 5;
     [SerializeField] private Slider healthSlider;

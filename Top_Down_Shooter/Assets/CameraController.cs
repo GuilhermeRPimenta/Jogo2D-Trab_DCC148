@@ -8,11 +8,11 @@ public class CameraController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (followTransform.position.x > -11 && followTransform.position.x < 11)
+        if (followTransform.position.x > -11 && followTransform.position.x < 1100)
         {
             this.transform.position = new Vector3(followTransform.position.x, this.transform.position.y, this.transform.position.z);
         }
-        if (followTransform.position.y > -10.8 && followTransform.position.y < 10.8)
+        if (followTransform.position.y > -100.8 && followTransform.position.y < 10.8)
         {
             this.transform.position = new Vector3(this.transform.position.x, followTransform.position.y, this.transform.position.z);
         }
