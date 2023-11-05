@@ -111,4 +111,17 @@ public class TowerScript : MonoBehaviour
         }
         
     }
+
+    void OnCollisionEnter2D(Collision2D collision){
+        Debug.Log("asda");
+        Collider2D target = collision.collider;
+        if(target.gameObject.tag == "PlayerBullet"){
+            Destroy(target.gameObject);
+            health -= 1;
+            if(health <=0){
+                Destroy(gameObject);
+            }
+        }
+        
+    }
 }

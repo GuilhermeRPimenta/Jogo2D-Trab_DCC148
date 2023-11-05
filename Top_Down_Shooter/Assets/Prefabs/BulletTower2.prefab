@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7876100669115445322}
   - component: {fileID: 7155974495210897077}
   - component: {fileID: 6243579602638553714}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BulletTower2
   m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
@@ -107,6 +107,7 @@ CircleCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1899914002128943}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -130,7 +131,7 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
   m_Radius: 0.085
