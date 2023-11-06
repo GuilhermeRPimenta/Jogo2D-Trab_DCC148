@@ -39,7 +39,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(health == 0 && !dead){
+        if(health <= 0 && !dead){
             audioSource.PlayOneShot(deathSound, 1);
             dead = true;
             levelLoaderScript.ReloadLevel();

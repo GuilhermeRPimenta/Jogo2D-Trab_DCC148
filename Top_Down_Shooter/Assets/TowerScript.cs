@@ -111,7 +111,7 @@ public class TowerScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D target){
         if(target.gameObject.tag == "PlayerBullet"){
-            Destroy(target.gameObject);
+            target.gameObject.SetActive(false);
             health -= 1;
             if(health <=0){
                 Destroy(gameObject);

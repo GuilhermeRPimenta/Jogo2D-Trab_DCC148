@@ -5,14 +5,18 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform followTransform;
+    public float left = -11f;
+    public float right = 1100f;
+    public float up = 10.8f;
+    public float down = -100f;
 
     void FixedUpdate()
     {
-        if (followTransform.position.x > -11 && followTransform.position.x < 1100)
+        if (followTransform.position.x > left && followTransform.position.x < right)
         {
             this.transform.position = new Vector3(followTransform.position.x, this.transform.position.y, this.transform.position.z);
         }
-        if (followTransform.position.y > -100.8 && followTransform.position.y < 10.8)
+        if (followTransform.position.y > down && followTransform.position.y < up)
         {
             this.transform.position = new Vector3(this.transform.position.x, followTransform.position.y, this.transform.position.z);
         }
