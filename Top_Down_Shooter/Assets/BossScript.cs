@@ -23,6 +23,7 @@ public class BossScript : MonoBehaviour
     private float presentationStartTimer = 2;
     private float presentationTimer = 4;
     private float presentationEndTimer = 2;
+    private BoxCollider2D slimeCollider;
 
     private AudioSource audioSource;
     [SerializeField] AudioClip dmgSound;
@@ -39,6 +40,7 @@ public class BossScript : MonoBehaviour
         audioSource = GameObject.Find("EnemyDeathSoundPlayer").GetComponent<AudioSource>();
         animatorController = GetComponent<Animator>();
         player = GameObject.Find("Player");
+        slimeCollider = GetComponent<BoxCollider2D>();
 
         cameraHalfHeight = Camera.main.orthographicSize;
         cameraHalfWidth = cameraHalfHeight * Camera.main.aspect;
@@ -64,8 +66,13 @@ public class BossScript : MonoBehaviour
             }
             if(shootChargeTimer > 0){
                 shootChargeTimer -= Time.deltaTime;
+                UpdateAnimation("SlimeExplodeAnim");
+                slimeCollider.size = new Vector2(0.28f,0.29f);
+                slimeCollider.offset = new Vector2(0.004f, -0.03f);
             } else {
                 Shoot();
+                slimeCollider.size = new Vector2(0.16f,0.15f);
+                slimeCollider.offset = new Vector2(0, -0.005f);
                 shootTimer = 4;
                 shootChargeTimer = 2;
             }
@@ -79,8 +86,8 @@ public class BossScript : MonoBehaviour
         float dx;
         float dy;
         Vector3 pos = transform.position;
-        if(pos.x > Camera.main.transform.position.x + cameraHalfWidth + 5.5f  || pos.x < Camera.main.transform.position.x - cameraHalfWidth - 5.5f) return;
-        if(pos.y > Camera.main.transform.position.y + cameraHalfHeight + 5.5f  || pos.y < Camera.main.transform.position.y - cameraHalfHeight - 5.5f) return;
+        //if(pos.x > Camera.main.transform.position.x + cameraHalfWidth + 5.5f  || pos.x < Camera.main.transform.position.x - cameraHalfWidth - 5.5f) return;
+        //if(pos.y > Camera.main.transform.position.y + cameraHalfHeight + 5.5f  || pos.y < Camera.main.transform.position.y - cameraHalfHeight - 5.5f) return;
 
         if(pos.x < player.transform.position.x) dx = 1f;
         else dx = -1f;
@@ -101,8 +108,11 @@ public class BossScript : MonoBehaviour
         else if(player.transform.position.y > transform.position.y) newAnim = "SlimeBackAnim";
         else newAnim = "SlimeFrontAnim";
 
+        
+        
+
         pos.x += dx * speed * Time.deltaTime + xStrength/4000f * dx;
-        pos.y += dy * speed * Time.deltaTime + yStrength/4000f *dy;
+        pos.y += dy * speed * Time.deltaTime + yStrength/4000f * dy;
 
         transform.position = pos;
 
