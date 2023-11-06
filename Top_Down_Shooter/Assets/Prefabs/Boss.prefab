@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4055913092434421425}
   m_Layer: 7
   m_Name: Boss
-  m_TagString: CanHitPlayer
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,7 +165,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 396701127766077354}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -198,8 +198,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1899914002128943, guid: 055b68528cc995647ba83566e94ee9fa, type: 3}
   camera: {fileID: 0}
-  audioSource: {fileID: 6007266163253945623}
   dmgSound: {fileID: 8300000, guid: 7e724dbca67a2ab4e97df2f8be842f80, type: 3}
+  deathSound: {fileID: 8300000, guid: 9ad3e80e81c7e8949991e34c421d8ed4, type: 3}
+  shotSound: {fileID: 8300000, guid: 4ced1cfa53b75f1478b77faad41b9fea, type: 3}
 --- !u!1 &1690379013330057443
 GameObject:
   m_ObjectHideFlags: 0

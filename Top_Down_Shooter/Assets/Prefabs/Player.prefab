@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c5fe61761187974d9a1aba738a76b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 10
   newAnim: 
   healthSlider: {fileID: 0}
   audioSource: {fileID: 2750212700293447947}

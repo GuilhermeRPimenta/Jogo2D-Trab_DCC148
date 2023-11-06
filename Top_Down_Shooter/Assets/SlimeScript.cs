@@ -13,7 +13,7 @@ public class SlimeScript : MonoBehaviour
 
     private int health = 5;
 
-    [SerializeField] AudioSource audioSource;
+    private AudioSource audioSource;
     [SerializeField] AudioClip dmgSound;
     [SerializeField] AudioClip deathSound;
 
@@ -23,6 +23,7 @@ public class SlimeScript : MonoBehaviour
         animatorController = GetComponent<Animator>();
         player = GameObject.Find("Player");
 
+        audioSource = GameObject.Find("EnemyDeathSoundPlayer").GetComponent<AudioSource>();
         cameraHalfHeight = Camera.main.orthographicSize;
         cameraHalfWidth = cameraHalfHeight * Camera.main.aspect;
     }
@@ -87,7 +88,7 @@ public class SlimeScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D target){
         if(target.gameObject.tag == "PlayerBullet"){
             audioSource.PlayOneShot(dmgSound, 1);
-            Destroy(target.gameObject);
+            target.gameObject.SetActive(false);
             health -= 1;
             if(health <=0){
                 Destroy(gameObject);

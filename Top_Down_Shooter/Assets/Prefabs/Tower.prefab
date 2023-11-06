@@ -236,6 +236,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1899914002128943, guid: 055b68528cc995647ba83566e94ee9fa, type: 3}
   audioSource: {fileID: 6559481624178549391}
   dmgSound: {fileID: 8300000, guid: 7e724dbca67a2ab4e97df2f8be842f80, type: 3}
+  deathSound: {fileID: 8300000, guid: 9ad3e80e81c7e8949991e34c421d8ed4, type: 3}
   shotSound: {fileID: 8300000, guid: 5e9ad9a5f21413947ac851734941abdf, type: 3}
 --- !u!50 &-7499684649527263577
 Rigidbody2D:

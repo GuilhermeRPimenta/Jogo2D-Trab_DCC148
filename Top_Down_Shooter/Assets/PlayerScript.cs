@@ -150,5 +150,10 @@ public class PlayerScript : MonoBehaviour
             health -= 1;
             healthSlider.value = health;
         }
+        else if(target.gameObject.tag == "Boss"){
+            audioSource.PlayOneShot(dmgSound, 1);
+            health -= 2;
+            healthSlider.value = health;
+        }
     }
 }

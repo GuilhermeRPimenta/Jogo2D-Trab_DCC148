@@ -15,7 +15,7 @@ public class BossScript : MonoBehaviour
     private float shootChargeTimer = 2;
     private bool isShooting = false;
 
-    private int health = 5;
+    private int health = 150;
     public GameObject bulletPrefab;
 
     public GameObject camera;
@@ -24,14 +24,17 @@ public class BossScript : MonoBehaviour
     private float presentationTimer = 4;
     private float presentationEndTimer = 2;
 
-    [SerializeField] AudioSource audioSource;
+    private AudioSource audioSource;
     [SerializeField] AudioClip dmgSound;
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip shotSound;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    private GameObject levelLoader;
+    private LevelLoaderScript levelLoaderScript;
+
+    void Start(){
+        levelLoader = GameObject.Find("LevelLoader");
+        audioSource = GameObject.Find("EnemyDeathSoundPlayer").GetComponent<AudioSource>();
         animatorController = GetComponent<Animator>();
         player = GameObject.Find("Player");
 
@@ -116,17 +119,20 @@ public class BossScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D target){
         if(target.gameObject.tag == "PlayerBullet"){
             audioSource.PlayOneShot(dmgSound, 1);
-            Destroy(target.gameObject);
+            target.gameObject.SetActive(false);
             health -= 1;
+            speed = 1f + 0.02f * (150-health);
             if(health <=0){
                 Destroy(gameObject);
                 audioSource.PlayOneShot(deathSound, 1);
+                LevelLoader.LoadNextLevel();
             }
         }
         
     }
 
     void Shoot(){
+        audioSource.PlayOneShot(shotSound, 1);
         GameObject bullet = Instantiate(bulletPrefab);
         int signalX = 1;
 

@@ -24,7 +24,7 @@ public class TowerScript : MonoBehaviour
     public GameObject bulletPrefab;
     private ObjectPool pool;
 
-    [SerializeField] AudioSource audioSource;
+    private AudioSource audioSource;
     [SerializeField] AudioClip dmgSound;
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip shotSound;
@@ -32,6 +32,7 @@ public class TowerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GameObject.Find("EnemyDeathSoundPlayer").GetComponent<AudioSource>();
         player = GameObject.Find("Player");
         spriteR = GetComponent<SpriteRenderer>();
         cameraHalfHeight = Camera.main.orthographicSize;
@@ -126,8 +127,8 @@ public class TowerScript : MonoBehaviour
             audioSource.PlayOneShot(dmgSound, 1);
             health -= 1;
             if(health <=0){
-                Destroy(gameObject);
                 audioSource.PlayOneShot(deathSound, 1);
+                Destroy(gameObject);
             }
         }
         
