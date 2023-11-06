@@ -19,6 +19,8 @@ public class PistolScript : MonoBehaviour
     [SerializeField] Sprite downSprite;
     [SerializeField] Sprite sideSprite;
     [SerializeField] Sprite upSprite;
+
+    [SerializeField] AudioSource shotSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +58,7 @@ public class PistolScript : MonoBehaviour
     }
 
     public void Shoot(){
+        shotSound.Play();
         GameObject bullet = pool.GetFromPool();
         string newAnim = weaponScript.newAnim;
         int signalX = 1;

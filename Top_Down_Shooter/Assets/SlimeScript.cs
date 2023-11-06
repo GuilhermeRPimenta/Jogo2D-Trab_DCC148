@@ -13,6 +13,10 @@ public class SlimeScript : MonoBehaviour
 
     private int health = 5;
 
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip dmgSound;
+    [SerializeField] AudioClip deathSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -82,10 +86,12 @@ public class SlimeScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D target){
         if(target.gameObject.tag == "PlayerBullet"){
+            audioSource.PlayOneShot(dmgSound, 1);
             Destroy(target.gameObject);
             health -= 1;
             if(health <=0){
                 Destroy(gameObject);
+                audioSource.PlayOneShot(deathSound, 1);
             }
         }
         

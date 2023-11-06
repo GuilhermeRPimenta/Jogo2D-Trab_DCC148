@@ -23,6 +23,12 @@ public class TowerScript : MonoBehaviour
 
     public GameObject bulletPrefab;
     private ObjectPool pool;
+
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip dmgSound;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip shotSound;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -82,6 +88,7 @@ public class TowerScript : MonoBehaviour
     }
 
     void Shoot(){
+        audioSource.PlayOneShot(shotSound, 1);
         GameObject bullet = pool.GetFromPool();
         int signalX = 1;
         if(playerOnLeft) signalX = -1;
@@ -113,13 +120,14 @@ public class TowerScript : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D collision){
-        Debug.Log("asda");
         Collider2D target = collision.collider;
         if(target.gameObject.tag == "PlayerBullet"){
             Destroy(target.gameObject);
+            audioSource.PlayOneShot(dmgSound, 1);
             health -= 1;
             if(health <=0){
                 Destroy(gameObject);
+                audioSource.PlayOneShot(deathSound, 1);
             }
         }
         

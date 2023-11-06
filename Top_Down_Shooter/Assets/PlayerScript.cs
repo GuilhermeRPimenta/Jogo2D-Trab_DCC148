@@ -12,8 +12,14 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private float speed = 9f;
     public string newAnim;
     private int health = 5;
+    private bool dead = false;
     [SerializeField] private Slider healthSlider;
 
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip dmgSound;
+    [SerializeField] AudioClip deathSound;
+    private GameObject levelLoader;
+    private LevelLoaderScript levelLoaderScript;
 
     
     private WeaponScript[] weaponScript;
@@ -26,11 +32,18 @@ public class PlayerScript : MonoBehaviour
         animatorController = GetComponent<Animator>();
         aim = GameObject.Find("Aim");
         weaponScript = GetComponentsInChildren<WeaponScript>();
+        levelLoader = GameObject.Find("LevelLoader");
+        levelLoaderScript = levelLoader.GetComponent<LevelLoaderScript>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(health == 0 && !dead){
+            audioSource.PlayOneShot(deathSound, 1);
+            dead = true;
+            levelLoaderScript.ReloadLevel();
+        }
         Move();
 
         if(Input.GetMouseButtonDown(0)) weaponScript[0].CheckWeapon();
@@ -126,11 +139,13 @@ public class PlayerScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D target){
         if(target.gameObject.tag == "CanHitPlayer"){
+            audioSource.PlayOneShot(dmgSound, 1);
             Destroy(target.gameObject);
             health -= 1;
             healthSlider.value = health;
         }
         else if(target.gameObject.tag == "EnemyBullet"){
+            audioSource.PlayOneShot(dmgSound, 1);
             target.gameObject.SetActive(false);
             health -= 1;
             healthSlider.value = health;
