@@ -27,6 +27,7 @@ public class BossScript : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField] AudioClip dmgSound;
     [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip chargeSound;
     [SerializeField] AudioClip shotSound;
 
     private GameObject levelLoader;
@@ -34,6 +35,7 @@ public class BossScript : MonoBehaviour
 
     void Start(){
         levelLoader = GameObject.Find("LevelLoader");
+        levelLoaderScript = levelLoader.GetComponent<LevelLoaderScript>();
         audioSource = GameObject.Find("EnemyDeathSoundPlayer").GetComponent<AudioSource>();
         animatorController = GetComponent<Animator>();
         player = GameObject.Find("Player");
@@ -56,6 +58,10 @@ public class BossScript : MonoBehaviour
             Move();
             shootTimer -= Time.deltaTime;
         } else {
+            if(!isShooting){
+                audioSource.PlayOneShot(chargeSound, 1);
+                isShooting = true;
+            }
             if(shootChargeTimer > 0){
                 shootChargeTimer -= Time.deltaTime;
             } else {
@@ -125,13 +131,14 @@ public class BossScript : MonoBehaviour
             if(health <=0){
                 Destroy(gameObject);
                 audioSource.PlayOneShot(deathSound, 1);
-                LevelLoader.LoadNextLevel();
+                levelLoaderScript.LoadNextLevel();
             }
         }
         
     }
 
     void Shoot(){
+        isShooting = false;
         audioSource.PlayOneShot(shotSound, 1);
         GameObject bullet = Instantiate(bulletPrefab);
         int signalX = 1;

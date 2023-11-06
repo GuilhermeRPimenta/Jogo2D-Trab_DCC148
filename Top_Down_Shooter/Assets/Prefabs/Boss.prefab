@@ -200,6 +200,7 @@ MonoBehaviour:
   camera: {fileID: 0}
   dmgSound: {fileID: 8300000, guid: 7e724dbca67a2ab4e97df2f8be842f80, type: 3}
   deathSound: {fileID: 8300000, guid: 9ad3e80e81c7e8949991e34c421d8ed4, type: 3}
+  chargeSound: {fileID: 8300000, guid: 97f75fbca783f974a93be0f740f6014a, type: 3}
   shotSound: {fileID: 8300000, guid: 4ced1cfa53b75f1478b77faad41b9fea, type: 3}
 --- !u!1 &1690379013330057443
 GameObject:
